@@ -1,0 +1,21 @@
+{
+  "name": "carawler_pntt",
+  "version": "1.0.0",
+  "description": "crawler pham nhan tu tien ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pntt"
+  ],
+  "author": "hungfeck",
+  "license": "ISC",
+  "dependencies": {
+    "casperjs": "^1.1.4",
+    "cheerio": "^1.0.0-rc.2",
+    "crawler": "^1.1.2",
+    "page": "^1.8.6",
+    "request": "^2.85.0"
+  }
+}
