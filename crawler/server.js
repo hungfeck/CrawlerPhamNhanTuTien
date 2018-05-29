@@ -49,9 +49,7 @@ function Crawler()
                 }
                 else{
                     console.log('Chưa có chương mới!');
-                    // sendEmail();
                 }
-                    // fs.writeFile('jsonfile.json', json, 'utf8', callback); 
             }
         });
     })
