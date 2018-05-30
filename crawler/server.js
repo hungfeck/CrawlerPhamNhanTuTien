@@ -12,10 +12,9 @@ var timer = setInterval(function() {
         }
         clearTimeout(timer);
     
-    }, 1000);
+    }, 30000);
 function Crawler()
 {
-    console.log('Goi toi Crawler')
     request('http://truyencv.com/pham-nhan-tu-tien-chi-tien-gioi-thien/', function (err, res, body) {
         var $ = cheerio.load(body);
         var newestChap = $('.list-overview .item .item-value a').text();
@@ -33,6 +32,7 @@ function Crawler()
                     console.log('Đã có chương mới!');
                     console.log('Cập nhật db thành công!');
                 });
+                sendEmail();
             } 
             else 
             {
@@ -77,7 +77,7 @@ function sendEmail()
         }
         else 
         {
-            console.log('Email sent: ' + info.response);
+            console.log('Đã gửi email: ' + info.response);
         }
     });
 }
