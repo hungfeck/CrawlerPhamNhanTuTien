@@ -7,17 +7,27 @@ const port = 3003;
 
 var count = 0;
 var timer = setInterval(function() {
-        if(count++ < 100) {
+        if(count++ < 1) {
             return Crawler();
         }
         clearTimeout(timer);
     
-    }, 30000);
+    }, 1000);
 function Crawler()
 {
-    request('http://truyencv.com/pham-nhan-tu-tien-chi-tien-gioi-thien/', function (err, res, body) {
+    request('http://truyencv.com/pham-nhan-tu-tien-chi-tien-gioi-thien/', function (err, res, body) 
+    {
         var $ = cheerio.load(body);
         var newestChap = $('.list-overview .item .item-value a').text();
+        var detailUrl = $('.list-overview .item .item-value a').attr('href');
+        console.log(detailUrl);
+        request(detailUrl, (err, res, body)=>{
+            let cheerioDetail = cheerio.load(body);
+            let contentDetail = cheerioDetail('.truyencv-read-content .content').text();
+            console.log('content '+ content);
+            sendEmail(newestChap,contentDetail);
+        });
+    
         var obj = {
             'newestChap' : newestChap
         }
@@ -45,6 +55,7 @@ function Crawler()
                         console.log('Đã có chương mới!');
                         console.log('Cập nhật db thành công!');
                     });
+                    
                     sendEmail();
                 }
                 else{
@@ -55,7 +66,7 @@ function Crawler()
     })
 }
 
-function sendEmail()
+function sendEmail(subject, content)
 {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -67,8 +78,8 @@ function sendEmail()
     var mailOptions = {
         from : 'hungfeck@gmail.com',
         to: 'quochung4@vtvcab.vn',
-        subject : 'Pham nhan tu tien ra chuong moi',
-        text : 'Noi dung truyen'
+        subject : 'Pham nhan tu tien ra chuong moi ' + subject,
+        text : content
     }
     transporter.sendMail(mailOptions, function(err, info){
         if(err) 
